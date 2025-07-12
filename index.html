@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevProfile | Cyber Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#61AFEF',
+                        secondary: '#98C379',
+                        accent: '#C678DD',
+                        warning: '#E5C07B',
+                        error: '#E06C75',
+                        dark: '#282C34',
+                        darker: '#1E2127',
+                        editor: '#21252B',
+                        comment: '#5C6370',
+                        keyword: '#C678DD',
+                        string: '#98C379',
+                        number: '#D19A66',
+                        variable: '#E06C75',
+                        function: '#61AFEF',
+                        java: '#B07219',
+                        go: '#00ADD8',
+                        python: '#3572A5',
+                    },
+                    fontFamily: {
+                        code: ['Fira Code', 'Consolas', 'Monaco', 'monospace'],
+                    },
+                    animation: {
+                        'typing': 'typing 4s steps(40, end)',
+                        'typing-slow': 'typing 6s steps(60, end)',
+                        'typing-slower': 'typing 8s steps(80, end)',
+                        'blink': 'blink .7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out forwards',
+                    },
+                    keyframes: {
+                        typing: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' },
+                        },
+                        blink: {
+                            'from, to': { borderColor: 'transparent' },
+                            '50%': { borderColor: '#5C6370' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0' },
+                            'to': { opacity: '1' },
+                        }
+                    }
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 0 10px rgba(97, 175, 239, 0.5);
+            }
+            .bg-glass {
+                background: rgba(30, 33, 39, 0.8);
+                backdrop-filter: blur(10px);
+            }
+            .typing-container {
+                display: inline-block;
+            }
+            .cursor {
+                border-right: 0.15em solid #5C6370;
+                animation: blink 0.7s infinite;
+            }
+            .tag-active {
+                @apply bg-editor text-white border-b-2 border-primary;
+            }
+            .tag-inactive {
+                @apply bg-darker/70 text-comment hover:text-white transition-all duration-200;
+            }
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+            .glow {
+                filter: drop-shadow(0 0 8px rgba(97, 175, 239, 0.5));
+            }
+            .fixed-top {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+        }
+    </style>
+</head>
+<body class="bg-darker min-h-screen flex items-center justify-center p-4 font-code text-gray-200 overflow-x-hidden">
+    <!-- Floating background elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[10%] left-[5%] w-64 h-64 bg-primary/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 0s;"></div>
+        <div class="absolute top-[30%] right-[10%] w-80 h-80 bg-accent/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[20%] left-[20%] w-72 h-72 bg-secondary/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-[40%] right-[15%] w-56 h-56 bg-java/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 1s;"></div>
+        <div class="absolute top-[20%] right-[25%] w-48 h-48 bg-go/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 3s;"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-6xl relative z-10">
+        <!-- Editor Window -->
+        <div class="bg-glass rounded-lg shadow-2xl overflow-hidden border border-gray-700/50">
+            <!-- Window Controls -->
+            <div class="fixed-top flex items-center justify-between bg-darker px-4 py-2 border-b border-gray-700/50">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-error"></div>
+                    <div class="w-3 h-3 rounded-full bg-warning"></div>
+                    <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                </div>
+                <div class="text-xs text-gray-400">developer-profile.js</div>
+                <div class="flex space-x-1">
+                    <div class="w-6 h-6 flex items-center justify-center text-xs text-gray-400 hover:text-white hover:bg-gray-700/50 rounded transition-colors">
+                        <i class="fa fa-window-minimize"></i>
+                    </div>
+                    <div class="w-6 h-6 flex items-center justify-center text-xs text-gray-400 hover:text-white hover:bg-gray-700/50 rounded transition-colors">
+                        <i class="fa fa-window-maximize"></i>
+                    </div>
+                    <div class="w-6 h-6 flex items-center justify-center text-xs text-gray-400 hover:text-white hover:bg-gray-700/50 rounded transition-colors">
+                        <i class="fa fa-times"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="fixed-top flex border-b border-gray-700/50 bg-darker/90 backdrop-blur-sm">
+                <div class="px-4 py-2 tag-active text-sm cursor-pointer" data-tab="javascript">
+                    <i class="fa fa-file-code-o mr-1"></i>developer-profile.js
+                </div>
+                <div class="px-4 py-2 tag-inactive text-sm cursor-pointer" data-tab="java">
+                    <i class="fa fa-coffee mr-1"></i>ProfileCard.java
+                </div>
+                <div class="px-4 py-2 tag-inactive text-sm cursor-pointer" data-tab="go">
+                    <i class="fa fa-terminal mr-1"></i>profile.go
+                </div>
+                <div class="px-4 py-2 tag-inactive text-sm cursor-pointer" data-tab="python">
+                    <i class="fa fa-code mr-1"></i>profile.py
+                </div>
+            </div>
+            <!-- Code Area -->
+            <div class="bg-editor p-4 overflow-x-auto max-h-[70vh] pt-24">
+                <!-- JavaScript Tab Content -->
+                <div id="javascript" class="tab-content active">
+                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-comment">
+/**
+ * Developer Profile Configuration
+ * 
+ * This object represents my professional profile with
+ * personal information, skills, and contact details.
+ */
+</span>
+<span class="text-keyword">const</span> <span class="text-variable">developerProfile</span> = {
+  <span class="text-variable">personalInfo</span>: {
+    <span class="text-string">'name'</span>: <span class="text-string">'Dong Hao'</span>,
+    <span class="text-string">'role'</span>: <span class="text-string">'Senior Full Stack Developer'</span>,
+    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>,
+    <span class="text-string">'company'</span>: <span class="text-string">'TikTok Inc.'</span>,
+    <span class="text-string">'summary'</span>: <span class="text-string">'10+ years of experience in building scalable web applications with a focus on performance and security.'</span>
+  },
+  
+  <span class="text-variable">skills</span>: [
+    <span class="text-string">'Java'</span>, <span class="text-string">'Go'</span>, <span class="text-string">'Python'</span>, 
+    <span class="text-string">'JavaScript'</span>, <span class="text-string">'TypeScript'</span>, <span class="text-string">'React'</span>, <span class="text-string">'Node.js'</span>,
+    <span class="text-string">'AWS'</span>, <span class="text-string">'Docker'</span>, <span class="text-string">'Kubernetes'</span>, <span class="text-string">'PostgreSQL'</span>
+  ],
+  
+  <span class="text-variable">contact</span>: {
+    <span class="text-string">'email'</span>: <span class="text-string">'ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=='</span>, <span class="text-comment">// Base64 encoded: donghao8455@163.com</span>
+    <span class="text-string">'phone'</span>: <span class="text-string">'MTUzNjkyNzE1MzY='</span>, <span class="text-comment">// Base64 encoded: 530-xxx-xxxx</span>
+    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>
+  },
+  
+  <span class="text-variable">social</span>: {
+    <span class="text-string">'linkedin'</span>: <span class="text-string">'alexjohnson'</span>,
+    <span class="text-string">'github'</span>: <span class="text-string">'alexj-dev'</span>,
+    <span class="text-string">'twitter'</span>: <span class="text-string">'@alexj_code'</span>,
+    <span class="text-string">'dribbble'</span>: <span class="text-string">'alex_designs'</span>
+  },
+  
+  <span class="text-comment">/**
+   * Get decrypted email address
+   * @returns {string} Decrypted email
+   */</span>
+  <span class="text-function">getEmail</span>() {
+    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.email);
+  },
+  
+  <span class="text-comment">/**
+   * Get decrypted phone number
+   * @returns {string} Decrypted phone number
+   */</span>
+  <span class="text-function">getPhone</span>() {
+    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.phone);
+  },
+  
+  <span class="text-comment">/**
+   * Get social media profile URL
+   * @param {string} platform Social media platform
+   * @returns {string} Profile URL
+   */</span>
+  <span class="text-function">getSocialProfile</span>(<span class="text-variable">platform</span>) {
+    <span class="text-keyword">const</span> <span class="text-variable">platforms</span> = {
+      <span class="text-string">'linkedin'</span>: <span class="text-string">'https://linkedin.com/'</span>,
+      <span class="text-string">'github'</span>: <span class="text-string">'https://github.com/'</span>,
+      <span class="text-string">'twitter'</span>: <span class="text-string">'https://www.yuque.com/'</span>,
+      <span class="text-string">'dribbble'</span>: <span class="text-string">'https://dribbble.com/'</span>
+    };
+    
+    <span class="text-keyword">if</span> (<span class="text-variable">platforms</span>[<span class="text-variable">platform</span>]) {
+      <span class="text-keyword">return</span> <span class="text-variable">platforms</span>[<span class="text-variable">platform</span>] + <span class="text-keyword">this</span>.social[<span class="text-variable">platform</span>];
+    }
+    
+    <span class="text-keyword">return</span> <span class="text-string">''</span>;
+  },
+  
+  <span class="text-comment">/**
+   * Say hello in different languages
+   */</span>
+  <span class="text-function">sayHello</span>() {
+    <span class="text-keyword">const</span> <span class="text-variable">greetings</span> = {
+      <span class="text-string">'english'</span>: <span class="text-string">'Hello, world!'</span>,
+      <span class="text-string">'spanish'</span>: <span class="text-string">'¡Hola, mundo!' </span>,
+      <span class="text-string">'french'</span>: <span class="text-string">'Bonjour, le monde!'</span>,
+      <span class="text-string">'japanese'</span>: <span class="text-string">'こんにちは、世界！'</span>
+    };
+    
+    <span class="text-keyword">return</span> <span class="text-variable">greetings</span>;
+  }
+};</pre>
+                </div>
+                
+                <!-- Java Tab Content -->
+                <div id="java" class="tab-content">
+                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-comment">/**
+ * Developer Profile Card
+ * 
+ * This class represents a developer profile with personal information
+ * and provides methods to access contact details securely.
+ */</span>
+<span class="text-java keyword">package</span> com.alexjohnson.profile;
+
+<span class="text-java keyword">import</span> java.util.Base64;
+<span class="text-java keyword">import</span> java.util.HashMap;
+<span class="text-java keyword">import</span> java.util.Map;
+
+<span class="text-java keyword">public</span> <span class="text-java keyword">class</span> <span class="text-java class-name">ProfileCard</span> {
+    <span class="text-comment">// Personal information</span>
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String name = <span class="text-java string">"Dong Hao"</span>;
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String role = <span class="text-java string">"Senior Full Stack Developer"</span>;
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String location = <span class="text-java string">"San Francisco, CA"</span>;
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String company = <span class="text-java string">"TikTok Inc."</span>;
+    
+    <span class="text-comment">// Skills</span>
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String[] skills = {
+        <span class="text-java string">'Java'</span>, <span class="text-java string">'Go'</span>, <span class="text-java string">'Python'</span>, 
+        <span class="text-java string">"JavaScript"</span>, <span class="text-java string">"TypeScript"</span>, <span class="text-java string">"React"</span>, <span class="text-java string">"Node.js"</span>,
+        <span class="text-java string">"AWS"</span>, <span class="text-java string">"Docker"</span>, <span class="text-java string">"Kubernetes"</span>, <span class="text-java string">"PostgreSQL"</span>
+    };
+    
+    <span class="text-comment">// Encrypted contact information</span>
+    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_EMAIL = <span class="text-java string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>;
+    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_PHONE = <span class="text-java string">"MTUzNjkyNzE1MzY="</span>;
+    
+    <span class="text-comment">// Social media profiles</span>
+    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> Map&lt;String, String&gt; socialProfiles = <span class="text-java keyword">new</span> HashMap&lt;&gt;() {{
+        put(<span class="text-java string">"linkedin"</span>, <span class="text-java string">"alexjohnson"</span>);
+        put(<span class="text-java string">"github"</span>, <span class="text-java string">"alexj-dev"</span>);
+        put(<span class="text-java string">"twitter"</span>, <span class="text-java string">"@alexj_code"</span>);
+        put(<span class="text-java string">"dribbble"</span>, <span class="text-java string">"alex_designs"</span>);
+    }};
+    
+    <span class="text-comment">/**
+     * Get the developer's name
+     * @return Name
+     */</span>
+    <span class="text-java keyword">public</span> String <span class="text-java method-name">getName</span>() {
+        <span class="text-java keyword">return</span> name;
+    }
+    
+    <span class="text-comment">/**
+     * Get the developer's role
+     * @return Role
+     */</span>
+    <span class="text-java keyword">public</span> String <span class="text-java method-name">getRole</span>() {
+        <span class="text-java keyword">return</span> role;
+    }
+    
+    <span class="text-comment">/**
+     * Get decrypted email address
+     * @return Decrypted email
+     */</span>
+    <span class="text-java keyword">public</span> String <span class="text-java method-name">getEmail</span>() {
+        <span class="text-java keyword">return</span> <span class="text-java class-name">new</span> String(Base64.getDecoder().decode(ENCRYPTED_EMAIL));
+    }
+    
+    <span class="text-comment">/**
+     * Say hello in different languages
+     */</span>
+    <span class="text-java keyword">public</span> Map&lt;String, String&gt; <span class="text-java method-name">sayHello</span>() {
+        Map&lt;String, String&gt; greetings = <span class="text-java keyword">new</span> HashMap&lt;&gt;();
+        greetings.put(<span class="text-java string">"english"</span>, <span class="text-java string">"Hello, world!"</span>);
+        greetings.put(<span class="text-java string">"spanish"</span>, <span class="text-java string">"¡Hola, mundo!"</span>);
+        greetings.put(<span class="text-java string">"french"</span>, <span class="text-java string">"Bonjour, le monde!"</span>);
+        greetings.put(<span class="text-java string">"japanese"</span>, <span class="text-java string">"こんにちは、世界！"</span>);
+        <span class="text-java keyword">return</span> greetings;
+    }
+    
+    <span class="text-comment">/**
+     * Main method to demonstrate the profile
+     * @param args Command line arguments
+     */</span>
+    <span class="text-java keyword">public</span> <span class="text-java keyword">static</span> <span class="text-java keyword">void</span> <span class="text-java method-name">main</span>(String[] args) {
+        ProfileCard profile = <span class="text-java keyword">new</span> ProfileCard();
+        System.out.println(<span class="text-java string">"Name: "</span> + profile.getName());
+        System.out.println(<span class="text-java string">"Role: "</span> + profile.getRole());
+        System.out.println(<span class="text-java string">"Email: "</span> + profile.getEmail());
+        
+        Map&lt;String, String&gt; greetings = profile.sayHello();
+        greetings.forEach((lang, msg) -&gt; System.out.println(lang + ": " + msg));
+    }
+}</pre>
+                </div>
+                
+                <!-- Go Tab Content -->
+                <div id="go" class="tab-content">
+                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-go comment">// ProfileCard - Go implementation of developer profile</span>
+<span class="text-go keyword">package</span> main
+
+<span class="text-go keyword">import</span> (
+    <span class="text-go string">"encoding/base64"</span>
+    <span class="text-go string">"fmt"</span>
+)
+
+<span class="text-go comment">// Profile represents developer profile information</span>
+<span class="text-go keyword">type</span> <span class="text-go type">Profile</span> <span class="text-go keyword">struct</span> {
+    <span class="text-go field">Name</span>        <span class="text-go keyword">string</span>
+    <span class="text-go field">Role</span>        <span class="text-go keyword">string</span>
+    <span class="text-go field">Location</span>    <span class="text-go keyword">string</span>
+    <span class="text-go field">Company</span>     <span class="text-go keyword">string</span>
+    <span class="text-go field">Skills</span>      []<span class="text-go keyword">string</span>
+    <span class="text-go field">EncryptedEmail</span>  <span class="text-go keyword">string</span>
+    <span class="text-go field">EncryptedPhone</span> <span class="text-go keyword">string</span>
+    <span class="text-go field">Social</span>      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>
+}
+
+<span class="text-go comment">// NewProfile creates a new Profile instance</span>
+<span class="text-go keyword">func</span> <span class="text-go function">NewProfile</span>() *<span class="text-go type">Profile</span> {
+    <span class="text-go keyword">return</span> &amp;<span class="text-go type">Profile</span>{
+        <span class="text-go field">Name</span>:        <span class="text-go string">"Dong Hao"</span>,
+        <span class="text-go field">Role</span>:        <span class="text-go string">"Senior Full Stack Developer"</span>,
+        <span class="text-go field">Location</span>:    <span class="text-go string">"San Francisco, CA"</span>,
+        <span class="text-go field">Company</span>:     <span class="text-go string">"TikTok Inc."</span>,
+        <span class="text-go field">Skills</span>:      []<span class="text-go keyword">string</span>{<span class="text-go string">'Java'</span>, <span class="text-go string">'Go'</span>, <span class="text-go string">'Python'</span>,, <span class="text-go string">"PostgreSQL"</span>
+                                <span class="text-go string">"JavaScript"</span>, <span class="text-go string">"TypeScript"</span>, <span class="text-go string">"React"</span>, 
+                                <span class="text-go string">"Node.js"</span>, <span class="text-go string">"AWS"</span>, <span class="text-go string">"Docker"</span>, <span class="text-go string">"Kubernetes"</span>},
+        <span class="text-go field">EncryptedEmail</span>:  <span class="text-go string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>,
+        <span class="text-go field">EncryptedPhone</span>: <span class="text-go string">"MTUzNjkyNzE1MzY="</span>,
+        <span class="text-go field">Social</span>:      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
+            <span class="text-go string">"linkedin"</span>: <span class="text-go string">"alexjohnson"</span>,
+            <span class="text-go string">"github"</span>:   <span class="text-go string">"alexj-dev"</span>,
+            <span class="text-go string">"twitter"</span>:  <span class="text-go string">"@alexj_code"</span>,
+            <span class="text-go string">"dribbble"</span>: <span class="text-go string">"alex_designs"</span>,
+        },
+    }
+}
+
+<span class="text-go comment">// GetEmail decrypts and returns the email address</span>
+<span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">GetEmail</span>() (<span class="text-go keyword">string</span>, <span class="text-go keyword">error</span>) {
+    decoded, err := base64.StdEncoding.DecodeString(p.EncryptedEmail)
+    <span class="text-go keyword">if</span> err != <span class="text-go keyword">nil</span> {
+        <span class="text-go keyword">return</span> <span class="text-go string">""</span>, err
+    }
+    <span class="text-go keyword">return</span> <span class="text-go keyword">string</span>(decoded), <span class="text-go keyword">nil</span>
+}
+
+<span class="text-go comment">// SayHello returns greetings in different languages</span>
+<span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">SayHello</span>() <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span> {
+    <span class="text-go keyword">return</span> <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
+        <span class="text-go string">"english"</span>: <span class="text-go string">"Hello, world!"</span>,
+        <span class="text-go string">"spanish"</span>: <span class="text-go string">"¡Hola, mundo!"</span>,
+        <span class="text-go string">"french"</span>:  <span class="text-go string">"Bonjour, le monde!"</span>,
+        <span class="text-go string">"japanese"</span>: <span class="text-go string">"こんにちは、世界！"</span>,
+    }
+}
+
+<span class="text-go comment">// main function to demonstrate the profile</span>
+<span class="text-go keyword">func</span> <span class="text-go function">main</span>() {
+    profile := NewProfile()
+    email, _ := profile.GetEmail()
+    fmt.Printf(<span class="text-go string">"Name: %s\nRole: %s\nEmail: %s\n"</span>, profile.Name, profile.Role, email)
+    
+    greetings := profile.SayHello()
+    <span class="text-go keyword">for</span> lang, msg := <span class="text-go keyword">range</span> greetings {
+        fmt.Printf(<span class="text-go string">"%s: %s\n"</span>, lang, msg)
+    }
+}</pre>
+                </div>
+                
+                <!-- Python Tab Content -->
+                <div id="python" class="tab-content">
+                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-python comment">"""
+Developer Profile Card
+Python implementation of personal information and contact details
+"""</span>
+
+<span class="text-python keyword">import</span> base64
+
+<span class="text-python keyword">class</span> <span class="text-python class-name">ProfileCard</span>:
+    <span class="text-python comment">"""Represents a developer profile with personal information"""</span>
+    
+    <span class="text-python keyword">def</span> <span class="text-python function">__init__</span>(<span class="text-python keyword">self</span>):
+        <span class="text-python keyword">self</span>.name = <span class="text-python string">"Dong Hao"</span>
+        <span class="text-python keyword">self</span>.role = <span class="text-python string">"Senior Full Stack Developer"</span>
+        <span class="text-python keyword">self</span>.location = <span class="text-python string">"San Francisco, CA"</span>
+        <span class="text-python keyword">self</span>.company = <span class="text-python string">"TikTok Inc."</span>
+        <span class="text-python keyword">self</span>.skills = [
+            <span class="text-python string">'Java'</span>, <span class="text-python string">'Go'</span>, <span class="text-python string">'Python'</span>,
+            <span class="text-python string">"JavaScript"</span>, <span class="text-python string">"TypeScript"</span>, <span class="text-python string">"React"</span>, 
+            <span class="text-python string">"Node.js"</span>, <span class="text-python string">"AWS"</span>, <span class="text-python string">"Docker"</span>, 
+            <span class="text-python string">"Kubernetes"</span>, <span class="text-python string">"PostgreSQL"</span>
+        ]
+        <span class="text-python keyword">self</span>._encrypted_email = <span class="text-python string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>
+        <span class="text-python keyword">self</span>._encrypted_phone = <span class="text-python string">"MTUzNjkyNzE1MzY="</span>
+        <span class="text-python keyword">self</span>.social = {
+            <span class="text-python string">"linkedin"</span>: <span class="text-python string">"alexjohnson"</span>,
+            <span class="text-python string">"github"</span>: <span class="text-python string">"alexj-dev"</span>,
+            <span class="text-python string">"twitter"</span>: <span class="text-python string">"@alexj_code"</span>,
+            <span class="text-python string">"dribbble"</span>: <span class="text-python string">"alex_designs"</span>
+        }
+    
+    <span class="text-python keyword">def</span> <span class="text-python function">get_email</span>(<span class="text-python keyword">self</span>):
+        <span class="text-python comment">"""Decrypt and return the email address"""</span>
+        <span class="text-python keyword">return</span> base64.b64decode(<span class="text-python keyword">self</span>._encrypted_email).decode(<span class="text-python string">'utf-8'</span>)
+    
+    <span class="text-python keyword">def</span> <span class="text-python function">get_phone</span>(<span class="text-python keyword">self</span>):
+        <span class="text-python comment">"""Decrypt and return the phone number"""</span>
+        <span class="text-python keyword">return</span> base64.b64decode(<span class="text-python keyword">self</span>._encrypted_phone).decode(<span class="text-python string">'utf-8'</span>)
+    
+    <span class="text-python keyword">def</span> <span class="text-python function">get_social_profile</span>(<span class="text-python keyword">self</span>, platform):
+        <span class="text-python comment">"""Get social media profile URL"""</span>
+        platforms = {
+            <span class="text-python string">"linkedin"</span>: <span class="text-python string">"https://linkedin.com/"</span>,
+            <span class="text-python string">"github"</span>: <span class="text-python string">"https://github.com/"</span>,
+            <span class="text-python string">"twitter"</span>: <span class="text-python string">"https://www.yuque.com/"</span>,
+            <span class="text-python string">"dribbble"</span>: <span class="text-python string">"https://dribbble.com/"</span>
+        }
+        
+        <span class="text-python keyword">if</span> platform <span class="text-python keyword">in</span> platforms:
+            <span class="text-python keyword">return</span> platforms[platform] + <span class="text-python keyword">self</span>.social[platform]
+        <span class="text-python keyword">return</span> <span class="text-python string">""</span>
+    
+    <span class="text-python keyword">def</span> <span class="text-python function">say_hello</span>(<span class="text-python keyword">self</span>):
+        <span class="text-python comment">"""Return greetings in different languages"""</span>
+        <span class="text-python keyword">return</span> {
+            <span class="text-python string">"english"</span>: <span class="text-python string">"Hello, world!"</span>,
+            <span class="text-python string">"spanish"</span>: <span class="text-python string">"¡Hola, mundo!"</span>,
+            <span class="text-python string">"french"</span>: <span class="text-python string">"Bonjour, le monde!"</span>,
+            <span class="text-python string">"japanese"</span>: <span class="text-python string">"こんにちは、世界！"</span>
+        }
+
+
+<span class="text-python keyword">if</span> __name__ == <span class="text-python string">"__main__"</span>:
+    profile = ProfileCard()
+    print(f"Name: {profile.name}")
+    print(f"Role: {profile.role}")
+    print(f"Email: {profile.get_email()}")
+    
+    greetings = profile.say_hello()
+    <span class="text-python keyword">for</span> lang, msg <span class="text-python keyword">in</span> greetings.items():
+        print(f"{lang}: {msg}")</pre>
+                </div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="bg-darker py-1 px-4 text-xs text-gray-400 flex justify-between items-center border-t border-gray-700/50">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center">
+                        <i class="fa fa-git-branch mr-1"></i>
+                        <span>main</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-code-fork mr-1"></i>
+                        <span>v3.1.0</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center">
+                        <i class="fa fa-check-circle text-secondary mr-1"></i>
+                        <span id="line-count">216 lines</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-file-code-o mr-1"></i>
+                        <span id="file-type">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+
+        <!-- Contact Info Overlay -->
+        <div id="contact-info" class="mt-6 bg-glass rounded-lg p-6 shadow-lg border border-gray-700/50 opacity-0 transition-opacity duration-500">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex-shrink-0">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-lg bg-primary/20 border-2 border-primary/50 overflow-hidden flex items-center justify-center">
+                        <div class="text-5xl text-primary">
+                            <i class="fa fa-user-circle-o"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <h2 class="text-2xl font-bold text-primary mb-1">Dong Hao</h2>
+                    <p class="text-lg text-gray-300 mb-3">Senior Full Stack Developer @ TikTok Inc.</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fa fa-envelope-o text-primary w-6"></i>
+                            <a href="mailto:donghao8455@163.com" class="hover:text-primary transition-colors">donghao8455@163.com</a>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fa fa-phone text-primary w-6"></i>
+                            <a href="tel:530-xxx-xxxx" class="hover:text-primary transition-colors">530-xxx-xxxx</a>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fa fa-map-marker text-primary w-6"></i>
+                            <span>San Francisco, CA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <a href="https://linkedin.com/alexjohnson" target="_blank" class="w-8 h-8 rounded-full bg-darker flex items-center justify-center text-gray-400 hover:text-primary hover:bg-dark transition-colors">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/alexj-dev" target="_blank" class="w-8 h-8 rounded-full bg-darker flex items-center justify-center text-gray-400 hover:text-primary hover:bg-dark transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                        <a href="https://www.yuque.com/alexj_code" target="_blank" class="w-8 h-8 rounded-full bg-darker flex items-center justify-center text-gray-400 hover:text-primary hover:bg-dark transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="https://dribbble.com/alex_designs" target="_blank" class="w-8 h-8 rounded-full bg-darker flex items-center justify-center text-gray-400 hover:text-primary hover:bg-dark transition-colors">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-4 border-t border-gray-700/50">
+                <h3 class="text-lg font-semibold text-gray-300 mb-2">Skills & Expertise</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Java</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Go</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Python</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">JavaScript</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">TypeScript</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">React</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Node.js</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">AWS</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Docker</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">Kubernetes</span>
+                    <span class="px-3 py-1 bg-dark rounded-full text-xs text-gray-300 border border-gray-700/50">PostgreSQL</span>
+                </div>
+                
+                <h3 class="text-lg font-semibold text-gray-300 mb-2 mt-4">Greetings</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div class="p-2 bg-dark rounded-lg border border-gray-700/50">
+                        <div class="text-xs text-comment">English</div>
+                        <div class="text-primary">Hello, world!</div>
+                    </div>
+                    <div class="p-2 bg-dark rounded-lg border border-gray-700/50">
+                        <div class="text-xs text-comment">Spanish</div>
+                        <div class="text-primary">¡Hola, mundo!</div>
+                    </div>
+                    <div class="p-2 bg-dark rounded-lg border border-gray-700/50">
+                        <div class="text-xs text-comment">French</div>
+                        <div class="text-primary">Bonjour, le monde!</div>
+                    </div>
+                    <div class="p-2 bg-dark rounded-lg border border-gray-700/50">
+                        <div class="text-xs text-comment">Japanese</div>
+                        <div class="text-primary">こんにちは、世界！</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const lineCount = document.getElementById('line-count');
+            const fileType = document.getElementById('file-type');
+            
+            const lineCounts = {
+                'javascript': '152 lines',
+                'java': '145 lines',
+                'go': '120 lines',
+                'python': '110 lines'
+            };
+            
+            const fileTypes = {
+                'javascript': 'JavaScript',
+                'java': 'Java',
+                'go': 'Go',
+                'python': 'Python'
+            };
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Update active tab styling
+                    tabs.forEach(t => {
+                        t.classList.remove('tag-active');
+                        t.classList.add('tag-inactive');
+                    });
+                    this.classList.remove('tag-inactive');
+                    this.classList.add('tag-active');
+                    
+                    // Show active tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabName).classList.add('active');
+                    
+                    // Update status bar
+                    lineCount.textContent = lineCounts[tabName];
+                    fileType.textContent = fileTypes[tabName];
+                });
+            });
+            
+            // Show contact info with fade-in animation after a delay 在延迟一段时间后，以淡入动画的形式显示联系信息。
+            setTimeout(() => {
+                const contactInfo = document.getElementById('contact-info');
+                contactInfo.classList.remove('opacity-0');
+                contactInfo.classList.add('opacity-100');
+            }, 2000);
+            
+            // Add typing animation effect to code content 为代码内容添加打字动画效果
+            // const codeElements = document.querySelectorAll('.tab-content pre');
+            // codeElements.forEach((element, index) => {
+            //     const originalContent = element.innerHTML;
+            //     element.innerHTML = '';
+                
+            //     let i = 0;
+            //     const typingSpeed = index === 0 ? 20 : 10; // First tab faster
+                
+            //     function type() {
+            //         if (i < originalContent.length) {
+            //             element.innerHTML += originalContent.charAt(i);
+            //             i++;
+            //             setTimeout(type, typingSpeed);
+            //         }
+            //     }
+                
+            //     // Only start typing for the first tab initially 最初只需为第一个标签栏输入内容即可
+            //     if (index === 0) {
+            //         setTimeout(type, 500);
+            //     }
+            // });
+            
+            // When switching tabs, animate the code content 在切换标签页时，对代码内容进行动画处理
+            // tabs.forEach(tab => {
+            //     tab.addEventListener('click', function() {
+            //         const tabName = this.getAttribute('data-tab');
+            //         const tabContent = document.getElementById(tabName);
+            //         const codeElement = tabContent.querySelector('pre');
+                    
+            //         const originalContent = codeElement.innerHTML;
+            //         codeElement.innerHTML = '';
+                    
+            //         let i = 0;
+            //         function type() {
+            //             if (i < originalContent.length) {
+            //                 codeElement.innerHTML += originalContent.charAt(i);
+            //                 i++;
+            //                 setTimeout(type, 10);
+            //             }
+            //         }
+                    
+            //         type();
+            //     });
+            // });
+        });
+    </script>
+</body>
+</html>
