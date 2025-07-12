@@ -39,6 +39,7 @@
                         'blink': 'blink .7s infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'fade-in': 'fadeIn 0.5s ease-in-out forwards',
+                        'line-appear': 'lineAppear 0.3s ease-out forwards',
                     },
                     keyframes: {
                         typing: {
@@ -56,6 +57,10 @@
                         fadeIn: {
                             'from': { opacity: '0' },
                             'to': { opacity: '1' },
+                        },
+                        lineAppear: {
+                            'from': { opacity: '0', transform: 'translateX(-10px)' },
+                            'to': { opacity: '1', transform: 'translateX(0)' },
                         }
                     }
                 },
@@ -73,9 +78,13 @@
             .bg-glass {
                 background: rgba(30, 33, 39, 0.8);
                 backdrop-filter: blur(10px);
+                margin-left: 2px;
             }
             .typing-container {
                 display: inline-block;
+                overflow: hidden;
+                white-space: nowrap;
+                position: relative;
             }
             .cursor {
                 border-right: 0.15em solid #5C6370;
@@ -100,6 +109,13 @@
                 position: sticky;
                 top: 0;
                 z-index: 10;
+            }
+            .line-hidden {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            .line-visible {
+                animation: lineAppear 0.3s ease-out forwards;
             }
         }
     </style>
@@ -158,334 +174,350 @@
             <div class="bg-editor p-4 overflow-x-auto max-h-[70vh] pt-24">
                 <!-- JavaScript Tab Content -->
                 <div id="javascript" class="tab-content active">
-                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-comment">
-/**
- * Developer Profile Configuration
- * 
- * This object represents my professional profile with
- * personal information, skills, and contact details.
- */
-</span>
-<span class="text-keyword">const</span> <span class="text-variable">developerProfile</span> = {
-  <span class="text-variable">personalInfo</span>: {
-    <span class="text-string">'name'</span>: <span class="text-string">'Dong Hao'</span>,
-    <span class="text-string">'role'</span>: <span class="text-string">'Senior Full Stack Developer'</span>,
-    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>,
-    <span class="text-string">'company'</span>: <span class="text-string">'TikTok Inc.'</span>,
-    <span class="text-string">'summary'</span>: <span class="text-string">'10+ years of experience in building scalable web applications with a focus on performance and security.'</span>
-  },
+                    <pre class="text-sm md:text-base leading-relaxed">
+<span class="line-hidden text-comment">/**
+<span class="line-hidden"> * Profile Card Configuration
+<span class="line-hidden"> * 
+<span class="line-hidden"> * This module exports a JavaScript object containing personal information
+<span class="line-hidden"> * formatted as a developer profile. All sensitive information is encrypted
+<span class="line-hidden"> * and should be accessed via the provided methods.
+<span class="line-hidden"> */</span>
+
+<span class="line-hidden text-keyword">const</span> <span class="text-variable">developerProfile</span> = {
+<span class="line-hidden">  <span class="text-variable">personalInfo</span>: {
+<span class="line-hidden">    <span class="text-string">'name'</span>: <span class="text-string">'Dong Hao'</span>,
+<span class="line-hidden">    <span class="text-string">'role'</span>: <span class="text-string">'Senior Full Stack Developer'</span>,
+<span class="line-hidden">    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>,
+<span class="line-hidden">    <span class="text-string">'company'</span>: <span class="text-string">'TikTok Inc.'</span>,
+<span class="line-hidden">    <span class="text-string">'summary'</span>: <span class="text-string">'10+ years of experience in building scalable web applications with a focus on performance and security.'</span>
+<span class="line-hidden">  },</span>
   
-  <span class="text-variable">skills</span>: [
-    <span class="text-string">'Java'</span>, <span class="text-string">'Go'</span>, <span class="text-string">'Python'</span>, 
-    <span class="text-string">'JavaScript'</span>, <span class="text-string">'TypeScript'</span>, <span class="text-string">'React'</span>, <span class="text-string">'Node.js'</span>,
-    <span class="text-string">'AWS'</span>, <span class="text-string">'Docker'</span>, <span class="text-string">'Kubernetes'</span>, <span class="text-string">'PostgreSQL'</span>
-  ],
+<span class="line-hidden">  <span class="text-variable">skills</span>: [
+<span class="line-hidden">    <span class="text-string">'Java'</span>, <span class="text-string">'Go'</span>, <span class="text-string">'Python'</span>, 
+<span class="line-hidden">    <span class="text-string">'JavaScript'</span>, <span class="text-string">'TypeScript'</span>, <span class="text-string">'React'</span>, <span class="text-string">'Node.js'</span>,
+<span class="line-hidden">    <span class="text-string">'AWS'</span>, <span class="text-string">'Docker'</span>, <span class="text-string">'Kubernetes'</span>, <span class="text-string">'PostgreSQL'</span>
+<span class="line-hidden">  ],</span>
   
-  <span class="text-variable">contact</span>: {
-    <span class="text-string">'email'</span>: <span class="text-string">'ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=='</span>, <span class="text-comment">// Base64 encoded: donghao8455@163.com</span>
-    <span class="text-string">'phone'</span>: <span class="text-string">'MTUzNjkyNzE1MzY='</span>, <span class="text-comment">// Base64 encoded: 530-xxx-xxxx</span>
-    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>
-  },
+<span class="line-hidden">  <span class="text-variable">contact</span>: {
+<span class="line-hidden">    <span class="text-string">'email'</span>: <span class="text-string">'ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=='</span>, <span class="text-comment">// Base64 encoded: donghao8455@163.com</span>
+<span class="line-hidden">    <span class="text-string">'phone'</span>: <span class="text-string">'MTUzNjkyNzE1MzY='</span>, <span class="text-comment">// Base64 encoded: 530-xxx-xxxx</span>
+<span class="line-hidden">    <span class="text-string">'location'</span>: <span class="text-string">'San Francisco, CA'</span>
+<span class="line-hidden">  },</span>
   
-  <span class="text-variable">social</span>: {
-    <span class="text-string">'linkedin'</span>: <span class="text-string">'alexjohnson'</span>,
-    <span class="text-string">'github'</span>: <span class="text-string">'alexj-dev'</span>,
-    <span class="text-string">'twitter'</span>: <span class="text-string">'@alexj_code'</span>,
-    <span class="text-string">'dribbble'</span>: <span class="text-string">'alex_designs'</span>
-  },
+<span class="line-hidden">  <span class="text-variable">social</span>: {
+<span class="line-hidden">    <span class="text-string">'linkedin'</span>: <span class="text-string">'alexjohnson'</span>,
+<span class="line-hidden">    <span class="text-string">'github'</span>: <span class="text-string">'alexj-dev'</span>,
+<span class="line-hidden">    <span class="text-string">'twitter'</span>: <span class="text-string">'@alexj_code'</span>,
+<span class="line-hidden">    <span class="text-string">'dribbble'</span>: <span class="text-string">'alex_designs'</span>
+<span class="line-hidden">  },</span>
   
-  <span class="text-comment">/**
-   * Get decrypted email address
-   * @returns {string} Decrypted email
-   */</span>
-  <span class="text-function">getEmail</span>() {
-    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.email);
-  },
+<span class="line-hidden">  <span class="text-comment">/**
+<span class="line-hidden">   * Get decrypted email address
+<span class="line-hidden">   * @returns {string} Decrypted email
+<span class="line-hidden">   */</span>
+<span class="line-hidden">  <span class="text-function">getEmail</span>() {
+<span class="line-hidden">    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.email);
+<span class="line-hidden">  },</span>
   
-  <span class="text-comment">/**
-   * Get decrypted phone number
-   * @returns {string} Decrypted phone number
-   */</span>
-  <span class="text-function">getPhone</span>() {
-    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.phone);
-  },
+<span class="line-hidden">  <span class="text-comment">/**
+<span class="line-hidden">   * Get decrypted phone number
+<span class="line-hidden">   * @returns {string} Decrypted phone number
+<span class="line-hidden">   */</span>
+<span class="line-hidden">  <span class="text-function">getPhone</span>() {
+<span class="line-hidden">    <span class="text-keyword">return</span> <span class="text-variable">atob</span>(<span class="text-keyword">this</span>.contact.phone);
+<span class="line-hidden">  },</span>
   
-  <span class="text-comment">/**
-   * Get social media profile URL
-   * @param {string} platform Social media platform
-   * @returns {string} Profile URL
-   */</span>
-  <span class="text-function">getSocialProfile</span>(<span class="text-variable">platform</span>) {
-    <span class="text-keyword">const</span> <span class="text-variable">platforms</span> = {
-      <span class="text-string">'linkedin'</span>: <span class="text-string">'https://linkedin.com/'</span>,
-      <span class="text-string">'github'</span>: <span class="text-string">'https://github.com/'</span>,
-      <span class="text-string">'twitter'</span>: <span class="text-string">'https://www.yuque.com/'</span>,
-      <span class="text-string">'dribbble'</span>: <span class="text-string">'https://dribbble.com/'</span>
-    };
+<span class="line-hidden">  <span class="text-comment">/**
+<span class="line-hidden">   * Get social media profile URL
+<span class="line-hidden">   * @param {string} platform Social media platform
+<span class="line-hidden">   * @returns {string} Profile URL
+<span class="line-hidden">   */</span>
+<span class="line-hidden">  <span class="text-function">getSocialProfile</span>(<span class="text-variable">platform</span>) {
+<span class="line-hidden">    <span class="text-keyword">const</span> <span class="text-variable">platforms</span> = {
+<span class="line-hidden">      <span class="text-string">'linkedin'</span>: <span class="text-string">'https://linkedin.com/'</span>,
+<span class="line-hidden">      <span class="text-string">'github'</span>: <span class="text-string">'https://github.com/'</span>,
+<span class="line-hidden">      <span class="text-string">'twitter'</span>: <span class="text-string">'https://www.yuque.com/'</span>,
+<span class="line-hidden">      <span class="text-string">'dribbble'</span>: <span class="text-string">'https://dribbble.com/'</span>
+<span class="line-hidden">    };</span>
     
-    <span class="text-keyword">if</span> (<span class="text-variable">platforms</span>[<span class="text-variable">platform</span>]) {
-      <span class="text-keyword">return</span> <span class="text-variable">platforms</span>[<span class="text-variable">platform</span>] + <span class="text-keyword">this</span>.social[<span class="text-variable">platform</span>];
-    }
+<span class="line-hidden">    <span class="text-keyword">if</span> (<span class="text-variable">platforms</span>[<span class="text-variable">platform</span>]) {
+<span class="line-hidden">      <span class="text-keyword">return</span> <span class="text-variable">platforms</span>[<span class="text-variable">platform</span>] + <span class="text-keyword">this</span>.social[<span class="text-variable">platform</span>];
+<span class="line-hidden">    }</span>
     
-    <span class="text-keyword">return</span> <span class="text-string">''</span>;
-  },
+<span class="line-hidden">    <span class="text-keyword">return</span> <span class="text-string">''</span>;
+<span class="line-hidden">  },</span>
   
-  <span class="text-comment">/**
-   * Say hello in different languages
-   */</span>
-  <span class="text-function">sayHello</span>() {
-    <span class="text-keyword">const</span> <span class="text-variable">greetings</span> = {
-      <span class="text-string">'english'</span>: <span class="text-string">'Hello, world!'</span>,
-      <span class="text-string">'spanish'</span>: <span class="text-string">'¡Hola, mundo!' </span>,
-      <span class="text-string">'french'</span>: <span class="text-string">'Bonjour, le monde!'</span>,
-      <span class="text-string">'japanese'</span>: <span class="text-string">'こんにちは、世界！'</span>
-    };
+<span class="line-hidden">  <span class="text-comment">/**
+<span class="line-hidden">   * Say hello in different languages
+<span class="line-hidden">   */</span>
+<span class="line-hidden">  <span class="text-function">sayHello</span>() {
+<span class="line-hidden">    <span class="text-keyword">const</span> <span class="text-variable">greetings</span> = {
+<span class="line-hidden">      <span class="text-string">'english'</span>: <span class="text-string">'Hello, world!'</span>,
+<span class="line-hidden">      <span class="text-string">'spanish'</span>: <span class="text-string">'¡Hola, mundo!' </span>,
+<span class="line-hidden">      <span class="text-string">'french'</span>: <span class="text-string">'Bonjour, le monde!'</span>,
+<span class="line-hidden">      <span class="text-string">'japanese'</span>: <span class="text-string">'こんにちは、世界！'</span>
+<span class="line-hidden">    };</span>
     
-    <span class="text-keyword">return</span> <span class="text-variable">greetings</span>;
-  }
-};</pre>
+<span class="line-hidden text-keyword">return</span> <span class="text-variable">greetings</span>;
+<span class="line-hidden">  }</span>
+<span class="line-hidden">  };</span></pre>
                 </div>
                 
                 <!-- Java Tab Content -->
                 <div id="java" class="tab-content">
-                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-comment">/**
- * Developer Profile Card
- * 
- * This class represents a developer profile with personal information
- * and provides methods to access contact details securely.
- */</span>
-<span class="text-java keyword">package</span> com.alexjohnson.profile;
+                    <pre class="text-sm md:text-base leading-relaxed">
+<span class="line-hidden text-comment">/**
+<span class="line-hidden"> * Developer Profile Card
+<span class="line-hidden"> * 
+<span class="line-hidden"> * This class represents a developer profile with personal information
+<span class="line-hidden"> * and provides methods to access contact details securely.
+<span class="line-hidden"> */</span>
+<span class="line-hidden text-java keyword">package</span> com.alexjohnson.profile;
 
-<span class="text-java keyword">import</span> java.util.Base64;
-<span class="text-java keyword">import</span> java.util.HashMap;
-<span class="text-java keyword">import</span> java.util.Map;
+<span class="line-hidden text-java keyword">import</span> java.util.Base64;
+<span class="line-hidden text-java keyword">import</span> java.util.HashMap;
+<span class="line-hidden text-java keyword">import</span> java.util.Map;
 
-<span class="text-java keyword">public</span> <span class="text-java keyword">class</span> <span class="text-java class-name">ProfileCard</span> {
-    <span class="text-comment">// Personal information</span>
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String name = <span class="text-java string">"Dong Hao"</span>;
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String role = <span class="text-java string">"Senior Full Stack Developer"</span>;
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String location = <span class="text-java string">"San Francisco, CA"</span>;
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String company = <span class="text-java string">"TikTok Inc."</span>;
+<span class="line-hidden text-java keyword">public</span> <span class="text-java keyword">class</span> <span class="text-java class-name">ProfileCard</span> {
+<span class="line-hidden">    <span class="text-comment">// Personal information</span>
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String name = <span class="text-java string">"Dong Hao"</span>;
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String role = <span class="text-java string">"Senior Full Stack Developer"</span>;
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String location = <span class="text-java string">"San Francisco, CA"</span>;
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String company = <span class="text-java string">"TikTok Inc."</span>;
     
-    <span class="text-comment">// Skills</span>
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String[] skills = {
-        <span class="text-java string">'Java'</span>, <span class="text-java string">'Go'</span>, <span class="text-java string">'Python'</span>, 
-        <span class="text-java string">"JavaScript"</span>, <span class="text-java string">"TypeScript"</span>, <span class="text-java string">"React"</span>, <span class="text-java string">"Node.js"</span>,
-        <span class="text-java string">"AWS"</span>, <span class="text-java string">"Docker"</span>, <span class="text-java string">"Kubernetes"</span>, <span class="text-java string">"PostgreSQL"</span>
-    };
+<span class="line-hidden">    <span class="text-comment">// Skills</span>
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> String[] skills = {
+<span class="line-hidden">        <span class="text-java string">'Java'</span>, <span class="text-java string">'Go'</span>, <span class="text-java string">'Python'</span>, 
+<span class="line-hidden">        <span class="text-java string">"JavaScript"</span>, <span class="text-java string">"TypeScript"</span>, <span class="text-java string">"React"</span>, <span class="text-java string">"Node.js"</span>,
+<span class="line-hidden">        <span class="text-java string">"AWS"</span>, <span class="text-java string">"Docker"</span>, <span class="text-java string">"Kubernetes"</span>, <span class="text-java string">"PostgreSQL"</span>
+<span class="line-hidden">    };</span>
     
-    <span class="text-comment">// Encrypted contact information</span>
-    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_EMAIL = <span class="text-java string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>;
-    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_PHONE = <span class="text-java string">"MTUzNjkyNzE1MzY="</span>;
+<span class="line-hidden">    <span class="text-comment">// Encrypted contact information</span>
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_EMAIL = <span class="text-java string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>;
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">static</span> <span class="text-java keyword">final</span> String ENCRYPTED_PHONE = <span class="text-java string">"MTUzNjkyNzE1MzY="</span>;
     
-    <span class="text-comment">// Social media profiles</span>
-    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> Map&lt;String, String&gt; socialProfiles = <span class="text-java keyword">new</span> HashMap&lt;&gt;() {{
-        put(<span class="text-java string">"linkedin"</span>, <span class="text-java string">"alexjohnson"</span>);
-        put(<span class="text-java string">"github"</span>, <span class="text-java string">"alexj-dev"</span>);
-        put(<span class="text-java string">"twitter"</span>, <span class="text-java string">"@alexj_code"</span>);
-        put(<span class="text-java string">"dribbble"</span>, <span class="text-java string">"alex_designs"</span>);
-    }};
+<span class="line-hidden">    <span class="text-comment">// Social media profiles</span>
+<span class="line-hidden">    <span class="text-java keyword">private</span> <span class="text-java keyword">final</span> Map&lt;String, String&gt; socialProfiles = <span class="text-java keyword">new</span> HashMap&lt;&gt;() {{
+<span class="line-hidden">        put(<span class="text-java string">"linkedin"</span>, <span class="text-java string">"alexjohnson"</span>);
+<span class="line-hidden">        put(<span class="text-java string">"github"</span>, <span class="text-java string">"alexj-dev"</span>);
+<span class="line-hidden">        put(<span class="text-java string">"twitter"</span>, <span class="text-java string">"@alexj_code"</span>);
+<span class="line-hidden">        put(<span class="text-java string">"dribbble"</span>, <span class="text-java string">"alex_designs"</span>);
+<span class="line-hidden">    }};</span>
     
-    <span class="text-comment">/**
-     * Get the developer's name
-     * @return Name
-     */</span>
-    <span class="text-java keyword">public</span> String <span class="text-java method-name">getName</span>() {
-        <span class="text-java keyword">return</span> name;
-    }
+<span class="line-hidden text-comment">/**
+<span class="line-hidden">     * Get the developer's name
+<span class="line-hidden">     * @return Name
+<span class="line-hidden">     */</span>
+<span class="line-hidden">    <span class="text-java keyword">public</span> String <span class="text-java method-name">getName</span>() {
+<span class="line-hidden">        <span class="text-java keyword">return</span> name;
+<span class="line-hidden">    }</span>
     
-    <span class="text-comment">/**
-     * Get the developer's role
-     * @return Role
-     */</span>
-    <span class="text-java keyword">public</span> String <span class="text-java method-name">getRole</span>() {
-        <span class="text-java keyword">return</span> role;
-    }
+<span class="line-hidden text-comment">/**
+<span class="line-hidden">     * Get the developer's role
+<span class="line-hidden">     * @return Role
+<span class="line-hidden">     */</span>
+<span class="line-hidden">    <span class="text-java keyword">public</span> String <span class="text-java method-name">getRole</span>() {
+<span class="line-hidden">        <span class="text-java keyword">return</span> role;
+<span class="line-hidden">    }</span>
     
-    <span class="text-comment">/**
-     * Get decrypted email address
-     * @return Decrypted email
-     */</span>
-    <span class="text-java keyword">public</span> String <span class="text-java method-name">getEmail</span>() {
-        <span class="text-java keyword">return</span> <span class="text-java class-name">new</span> String(Base64.getDecoder().decode(ENCRYPTED_EMAIL));
-    }
+<span class="line-hidden text-comment">/**
+<span class="line-hidden">     * Get decrypted email address
+<span class="line-hidden">     * @return Decrypted email
+<span class="line-hidden">     */</span>
+<span class="line-hidden">    <span class="text-java keyword">public</span> String <span class="text-java method-name">getEmail</span>() {
+<span class="line-hidden">        <span class="text-java keyword">return</span> <span class="text-java class-name">new</span> String(Base64.getDecoder().decode(ENCRYPTED_EMAIL));
+<span class="line-hidden">    }</span>
     
-    <span class="text-comment">/**
-     * Say hello in different languages
-     */</span>
-    <span class="text-java keyword">public</span> Map&lt;String, String&gt; <span class="text-java method-name">sayHello</span>() {
-        Map&lt;String, String&gt; greetings = <span class="text-java keyword">new</span> HashMap&lt;&gt;();
-        greetings.put(<span class="text-java string">"english"</span>, <span class="text-java string">"Hello, world!"</span>);
-        greetings.put(<span class="text-java string">"spanish"</span>, <span class="text-java string">"¡Hola, mundo!"</span>);
-        greetings.put(<span class="text-java string">"french"</span>, <span class="text-java string">"Bonjour, le monde!"</span>);
-        greetings.put(<span class="text-java string">"japanese"</span>, <span class="text-java string">"こんにちは、世界！"</span>);
-        <span class="text-java keyword">return</span> greetings;
-    }
+<span class="line-hidden text-comment">/**
+<span class="line-hidden">     * Say hello in different languages
+<span class="line-hidden">     * @return Map of greetings
+<span class="line-hidden">     */</span>
+<span class="line-hidden">    <span class="text-java keyword">public</span> Map&lt;String, String&gt; <span class="text-java method-name">sayHello</span>() {
+<span class="line-hidden">        Map&lt;String, String&gt; greetings = <span class="text-java keyword">new</span> HashMap&lt;&gt;();
+<span class="line-hidden">        greetings.put(<span class="text-java string">"english"</span>, <span class="text-java string">"Hello, world!"</span>);
+<span class="line-hidden">        greetings.put(<span class="text-java string">"spanish"</span>, <span class="text-java string">"¡Hola, mundo!"</span>);
+<span class="line-hidden">        greetings.put(<span class="text-java string">"french"</span>, <span class="text-java string">"Bonjour, le monde!"</span>);
+<span class="line-hidden">        greetings.put(<span class="text-java string">"japanese"</span>, <span class="text-java string">"こんにちは、世界！"</span>);
+<span class="line-hidden">        <span class="text-java keyword">return</span> greetings;
+<span class="line-hidden">    }</span>
     
-    <span class="text-comment">/**
-     * Main method to demonstrate the profile
-     * @param args Command line arguments
-     */</span>
-    <span class="text-java keyword">public</span> <span class="text-java keyword">static</span> <span class="text-java keyword">void</span> <span class="text-java method-name">main</span>(String[] args) {
-        ProfileCard profile = <span class="text-java keyword">new</span> ProfileCard();
-        System.out.println(<span class="text-java string">"Name: "</span> + profile.getName());
-        System.out.println(<span class="text-java string">"Role: "</span> + profile.getRole());
-        System.out.println(<span class="text-java string">"Email: "</span> + profile.getEmail());
+<span class="line-hidden text-comment">/**
+<span class="line-hidden">     * Main method to demonstrate the profile
+<span class="line-hidden">     * @param args Command line arguments
+<span class="line-hidden">     */</span>
+<span class="line-hidden">    <span class="text-java keyword">public</span> <span class="text-java keyword">static</span> <span class="text-java keyword">void</span> <span class="text-java method-name">main</span>(String[] args) {
+<span class="line-hidden">        ProfileCard profile = <span class="text-java keyword">new</span> ProfileCard();
+<span class="line-hidden">        System.out.println(<span class="text-java string">"Name: "</span> + profile.getName());
+<span class="line-hidden">        System.out.println(<span class="text-java string">"Role: "</span> + profile.getRole());
+<span class="line-hidden">        System.out.println(<span class="text-java string">"Email: "</span> + profile.getEmail());
         
-        Map&lt;String, String&gt; greetings = profile.sayHello();
-        greetings.forEach((lang, msg) -&gt; System.out.println(lang + ": " + msg));
-    }
-}</pre>
+<span class="line-hidden">        Map&lt;String, String&gt; greetings = profile.sayHello();
+<span class="line-hidden">        greetings.forEach((lang, msg) -&gt; System.out.println(lang + ": " + msg));
+<span class="line-hidden">    }</span>
+<span class="line-hidden"> }</span>
+                </pre>
                 </div>
                 
                 <!-- Go Tab Content -->
                 <div id="go" class="tab-content">
-                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-go comment">// ProfileCard - Go implementation of developer profile</span>
-<span class="text-go keyword">package</span> main
+                    <pre class="text-sm md:text-base leading-relaxed">
+<span class="line-hidden text-go comment">// ProfileCard - Go implementation of developer profile</span>
+<span class="line-hidden">  </span><span class="text-go keyword">package</span> main
 
-<span class="text-go keyword">import</span> (
-    <span class="text-go string">"encoding/base64"</span>
-    <span class="text-go string">"fmt"</span>
-)
+<span class="line-hidden"> <span class="text-go keyword">import</span> (
+<span class="line-hidden">     <span class="text-go string">"encoding/base64"</span>
+<span class="line-hidden">     <span class="text-go string">"fmt"</span>
+<span class="line-hidden"> )</span>
 
-<span class="text-go comment">// Profile represents developer profile information</span>
-<span class="text-go keyword">type</span> <span class="text-go type">Profile</span> <span class="text-go keyword">struct</span> {
-    <span class="text-go field">Name</span>        <span class="text-go keyword">string</span>
-    <span class="text-go field">Role</span>        <span class="text-go keyword">string</span>
-    <span class="text-go field">Location</span>    <span class="text-go keyword">string</span>
-    <span class="text-go field">Company</span>     <span class="text-go keyword">string</span>
-    <span class="text-go field">Skills</span>      []<span class="text-go keyword">string</span>
-    <span class="text-go field">EncryptedEmail</span>  <span class="text-go keyword">string</span>
-    <span class="text-go field">EncryptedPhone</span> <span class="text-go keyword">string</span>
-    <span class="text-go field">Social</span>      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>
+<span class="line-hidden text-go comment">// Profile represents developer profile information</span>
+<span class="line-hidden"> <span class="text-go keyword">type</span> <span class="text-go type">Profile</span> <span class="text-go keyword">struct</span> {
+<span class="line-hidden">    <span class="text-go field">Name</span>        <span class="text-go keyword">string</span>
+
+    <span class="line-hidden">    <span class="text-go field">Role</span>        <span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">Location</span>    <span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">Company</span>     <span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">Skills</span>      []<span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">EncryptedEmail</span>  <span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">EncryptedPhone</span> <span class="text-go keyword">string</span>
+    <span class="line-hidden">    <span class="text-go field">Social</span>      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>
 }
 
-<span class="text-go comment">// NewProfile creates a new Profile instance</span>
-<span class="text-go keyword">func</span> <span class="text-go function">NewProfile</span>() *<span class="text-go type">Profile</span> {
-    <span class="text-go keyword">return</span> &amp;<span class="text-go type">Profile</span>{
-        <span class="text-go field">Name</span>:        <span class="text-go string">"Dong Hao"</span>,
-        <span class="text-go field">Role</span>:        <span class="text-go string">"Senior Full Stack Developer"</span>,
-        <span class="text-go field">Location</span>:    <span class="text-go string">"San Francisco, CA"</span>,
-        <span class="text-go field">Company</span>:     <span class="text-go string">"TikTok Inc."</span>,
-        <span class="text-go field">Skills</span>:      []<span class="text-go keyword">string</span>{<span class="text-go string">'Java'</span>, <span class="text-go string">'Go'</span>, <span class="text-go string">'Python'</span>,, <span class="text-go string">"PostgreSQL"</span>
-                                <span class="text-go string">"JavaScript"</span>, <span class="text-go string">"TypeScript"</span>, <span class="text-go string">"React"</span>, 
-                                <span class="text-go string">"Node.js"</span>, <span class="text-go string">"AWS"</span>, <span class="text-go string">"Docker"</span>, <span class="text-go string">"Kubernetes"</span>},
-        <span class="text-go field">EncryptedEmail</span>:  <span class="text-go string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>,
-        <span class="text-go field">EncryptedPhone</span>: <span class="text-go string">"MTUzNjkyNzE1MzY="</span>,
-        <span class="text-go field">Social</span>:      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
-            <span class="text-go string">"linkedin"</span>: <span class="text-go string">"alexjohnson"</span>,
-            <span class="text-go string">"github"</span>:   <span class="text-go string">"alexj-dev"</span>,
-            <span class="text-go string">"twitter"</span>:  <span class="text-go string">"@alexj_code"</span>,
-            <span class="text-go string">"dribbble"</span>: <span class="text-go string">"alex_designs"</span>,
-        },
-    }
-}
+<span class="line-hidden text-go comment">// NewProfile creates a new Profile instance</span>
+<span class="line-hidden"> <span class="text-go keyword">func</span> <span class="text-go function">NewProfile</span>() *<span class="text-go type">Profile</span> {
+<span class="line-hidden">    <span class="text-go keyword">return</span> &amp;<span class="text-go type">Profile</span>{
+        <span class="line-hidden">        <span class="text-go field">Name</span>:        <span class="text-go string">"Dong Hao"</span>,
+        <span class="line-hidden">        <span class="text-go field">Role</span>:        <span class="text-go string">"Senior Full Stack Developer"</span>,
+        <span class="line-hidden">        <span class="text-go field">Location</span>:    <span class="text-go string">"San Francisco, CA"</span>,
+        <span class="line-hidden">        <span class="text-go field">Company</span>:     <span class="text-go string">"TikTok Inc."</span>,
+        <span class="line-hidden">        <span class="text-go field">Skills</span>:      []<span class="text-go keyword">string</span>{<span class="text-go string">'Java'</span>, <span class="text-go string">'Go'</span>, <span class="text-go string">'Python'</span>, <span class="text-go string">"PostgreSQL"</span>
+        <span class="line-hidden">        <span class="text-go field">Skills</span>:      []<span class="text-go keyword">string</span>{<span class="text-go string">'Java'</span>, <span class="text-go string">'Go'</span>, <span class="text-go string">'Python'</span>, <span class="text-go string">"PostgreSQL"</span>
+<span class="line-hidden">                                <span class="text-go string">"JavaScript"</span>, <span class="text-go string">"TypeScript"</span>, <span class="text-go string">"React"</span>, 
+<span class="line-hidden">                                <span class="text-go string">"JavaScript"</span>, <span class="text-go string">"TypeScript"</span>, <span class="text-go string">"React"</span>, 
+<span class="line-hidden">                                <span class="text-go string">"Node.js"</span>, <span class="text-go string">"AWS"</span>, <span class="text-go string">"Docker"</span>, <span class="text-go string">"Kubernetes"</span>},
+        <span class="line-hidden">        <span class="text-go field">EncryptedEmail</span>:  <span class="text-go string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>,
+        <span class="line-hidden">        <span class="text-go field">EncryptedPhone</span>: <span class="text-go string">"MTUzNjkyNzE1MzY="</span>,
+        <span class="line-hidden">        <span class="text-go field">Social</span>:      <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
+        <span class="line-hidden">            <span class="text-go string">"linkedin"</span>: <span class="text-go string">"alexjohnson"</span>,
+        <span class="line-hidden">            <span class="text-go string">"github"</span>:   <span class="text-go string">"alexj-dev"</span>,
+        <span class="line-hidden">            <span class="text-go string">"twitter"</span>:  <span class="text-go string">"@alexj_code"</span>,
+        <span class="line-hidden">            <span class="text-go string">"dribbble"</span>: <span class="text-go string">"alex_designs"</span>,
+        <span class="line-hidden"> },</span>
+    <span class="line-hidden"> }</span>
+<span class="line-hidden"> }</span>
 
-<span class="text-go comment">// GetEmail decrypts and returns the email address</span>
-<span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">GetEmail</span>() (<span class="text-go keyword">string</span>, <span class="text-go keyword">error</span>) {
-    decoded, err := base64.StdEncoding.DecodeString(p.EncryptedEmail)
-    <span class="text-go keyword">if</span> err != <span class="text-go keyword">nil</span> {
-        <span class="text-go keyword">return</span> <span class="text-go string">""</span>, err
-    }
-    <span class="text-go keyword">return</span> <span class="text-go keyword">string</span>(decoded), <span class="text-go keyword">nil</span>
-}
+<span class="line-hidden"><span class="text-go comment">// GetEmail decrypts and returns the email address</span>
+<span class="line-hidden"> <span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">GetEmail</span>() (<span class="text-go keyword">string</span>, <span class="text-go keyword">error</span>) {
+<span class="line-hidden">     decoded, err := base64.StdEncoding.DecodeString(p.EncryptedEmail)
+<span class="line-hidden">     <span class="text-go keyword">if</span> err != <span class="text-go keyword">nil</span> {
+<span class="line-hidden">         <span class="text-go keyword">return</span> <span class="text-go string">""</span>, err
+<span class="line-hidden">    }</span>
+<span class="line-hidden">     <span class="text-go keyword">return</span> <span class="text-go keyword">string</span>(decoded), <span class="text-go keyword">nil</span>
+<span class="line-hidden"> }</span>
 
-<span class="text-go comment">// SayHello returns greetings in different languages</span>
-<span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">SayHello</span>() <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span> {
-    <span class="text-go keyword">return</span> <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
-        <span class="text-go string">"english"</span>: <span class="text-go string">"Hello, world!"</span>,
-        <span class="text-go string">"spanish"</span>: <span class="text-go string">"¡Hola, mundo!"</span>,
-        <span class="text-go string">"french"</span>:  <span class="text-go string">"Bonjour, le monde!"</span>,
-        <span class="text-go string">"japanese"</span>: <span class="text-go string">"こんにちは、世界！"</span>,
-    }
-}
+<span class="line-hidden"><span class="text-go comment">// SayHello returns greetings in different languages</span>
+<span class="line-hidden"><span class="text-go keyword">func</span> (p *<span class="text-go type">Profile</span>) <span class="text-go function">SayHello</span>() <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span> {
+<span class="line-hidden">    <span class="text-go keyword">return</span> <span class="text-go keyword">map</span>[<span class="text-go keyword">string</span>]<span class="text-go keyword">string</span>{
+<span class="line-hidden">        <span class="text-go string">"english"</span>: <span class="text-go string">"Hello, world!"</span>,
+<span class="line-hidden">         <span class="text-go string">"spanish"</span>: <span class="text-go string">"¡Hola, mundo!"</span>,
+<span class="line-hidden">         <span class="text-go string">"french"</span>:  <span class="text-go string">"Bonjour, le monde!"</span>,
+<span class="line-hidden">         <span class="text-go string">"japanese"</span>: <span class="text-go string">"こんにちは、世界！"</span>,
+<span class="line-hidden">     }</span>
+<span class="line-hidden"> }</span>
 
-<span class="text-go comment">// main function to demonstrate the profile</span>
-<span class="text-go keyword">func</span> <span class="text-go function">main</span>() {
-    profile := NewProfile()
-    email, _ := profile.GetEmail()
-    fmt.Printf(<span class="text-go string">"Name: %s\nRole: %s\nEmail: %s\n"</span>, profile.Name, profile.Role, email)
+<span class="line-hidden"><span class="text-go comment">// main function to demonstrate the profile</span>
+<span class="line-hidden"><span class="text-go keyword">func</span> <span class="text-go function">main</span>() {
+<span class="line-hidden">     profile := NewProfile()
+<span class="line-hidden">     email, _ := profile.GetEmail()
+<span class="line-hidden">     fmt.Printf(<span class="text-go string">"Name: %s\nRole: %s\nEmail: %s\n"</span>, profile.Name, profile.Role, email)
     
-    greetings := profile.SayHello()
-    <span class="text-go keyword">for</span> lang, msg := <span class="text-go keyword">range</span> greetings {
-        fmt.Printf(<span class="text-go string">"%s: %s\n"</span>, lang, msg)
-    }
-}</pre>
+<span class="line-hidden">     greetings := profile.SayHello()
+<span class="line-hidden">     <span class="text-go keyword">for</span> lang, msg := <span class="text-go keyword">range</span> greetings {
+<span class="line-hidden">         fmt.Printf(<span class="text-go string">"%s: %s\n"</span>, lang, msg)
+<span class="line-hidden">     }
+<span class="line-hidden"> }</span>
+</pre>
                 </div>
                 
                 <!-- Python Tab Content -->
                 <div id="python" class="tab-content">
-                    <pre class="text-sm md:text-base leading-relaxed"><span class="text-python comment">"""
-Developer Profile Card
-Python implementation of personal information and contact details
-"""</span>
+                    <pre class="text-sm md:text-base leading-relaxed">
+<span class="line-hidden text-python comment">"""
+<span class="line-hidden"> Developer Profile Card
+<span class="line-hidden"> Python implementation of personal information and contact details
+<span class="line-hidden"> """</span>
 
-<span class="text-python keyword">import</span> base64
+<span class="line-hidden text-python keyword">import</span> base64
 
-<span class="text-python keyword">class</span> <span class="text-python class-name">ProfileCard</span>:
-    <span class="text-python comment">"""Represents a developer profile with personal information"""</span>
+<span class="line-hidden text-python keyword">class</span> <span class="line-hidden text-python class-name">ProfileCard</span>:
+    <span class="line-hidden text-python comment">"""Represents a developer profile with personal information"""</span>
+    <span class="line-hidden text-python comment">"""Represents a developer profile with personal information"""</span>
+
+    <span class="line-hidden text-python keyword">def</span> <span class="line-hidden text-python function">__init__</span>(<span class="line-hidden text-python keyword">self</span>):
+        <span class="line-hidden text-python keyword">self</span>.name = <span class="line-hidden text-python string">"Dong Hao"</span>
+        <span class="line-hidden text-python keyword">self</span>.name = <span class="line-hidden text-python string">"Dong Hao"</span>
+        <span class="line-hidden text-python keyword">self</span>.role = <span class="line-hidden text-python string">"Senior Full Stack Developer"</span>
+        <span class="line-hidden text-python keyword">self</span>.location = <span class="line-hidden text-python string">"San Francisco, CA"</span>
+        <span class="line-hidden text-python keyword">self</span>.company = <span class="line-hidden text-python string">"TikTok Inc."</span>
+        <span class="line-hidden text-python keyword">self</span>.skills = [
+            <span class="line-hidden text-python string">'Java'</span>, <span class="line-hidden text-python string">'Go'</span>, <span class="line-hidden text-python string">'Python'</span>,
+            <span class="line-hidden text-python string">"JavaScript"</span>, <span class="line-hidden text-python string">"TypeScript"</span>, <span class="line-hidden text-python string">"React"</span>, 
+            <span class="line-hidden text-python string">"Node.js"</span>, <span class="line-hidden text-python string">"AWS"</span>, <span class="line-hidden text-python string">"Docker"</span>, 
+            <span class="line-hidden text-python string">"Kubernetes"</span>, <span class="line-hidden text-python string">"PostgreSQL"</span>
+<span class="line-hidden">         ]</span>
+        <span class="line-hidden text-python keyword">self</span>._encrypted_email = <span class="line-hidden text-python string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>
+        <span class="line-hidden text-python keyword">self</span>._encrypted_phone = <span class="line-hidden text-python string">"MTUzNjkyNzE1MzY="</span>
+        <span class="line-hidden text-python keyword">self</span>.social = {
+            <span class="line-hidden text-python string">"linkedin"</span>: <span class="line-hidden text-python string">"alexjohnson"</span>,
+            <span class="line-hidden text-python string">"github"</span>: <span class="line-hidden text-python string">"alexj-dev"</span>,
+            <span class="line-hidden text-python string">"twitter"</span>: <span class="line-hidden text-python string">"@alexj_code"</span>,
+            <span class="line-hidden text-python string">"dribbble"</span>: <span class="line-hidden text-python string">"alex_designs"</span>
+<span class="line-hidden">         }</span>
     
-    <span class="text-python keyword">def</span> <span class="text-python function">__init__</span>(<span class="text-python keyword">self</span>):
-        <span class="text-python keyword">self</span>.name = <span class="text-python string">"Dong Hao"</span>
-        <span class="text-python keyword">self</span>.role = <span class="text-python string">"Senior Full Stack Developer"</span>
-        <span class="text-python keyword">self</span>.location = <span class="text-python string">"San Francisco, CA"</span>
-        <span class="text-python keyword">self</span>.company = <span class="text-python string">"TikTok Inc."</span>
-        <span class="text-python keyword">self</span>.skills = [
-            <span class="text-python string">'Java'</span>, <span class="text-python string">'Go'</span>, <span class="text-python string">'Python'</span>,
-            <span class="text-python string">"JavaScript"</span>, <span class="text-python string">"TypeScript"</span>, <span class="text-python string">"React"</span>, 
-            <span class="text-python string">"Node.js"</span>, <span class="text-python string">"AWS"</span>, <span class="text-python string">"Docker"</span>, 
-            <span class="text-python string">"Kubernetes"</span>, <span class="text-python string">"PostgreSQL"</span>
-        ]
-        <span class="text-python keyword">self</span>._encrypted_email = <span class="text-python string">"ZG9uZ2hhbzg0NTVAMTYzLmNvbQ=="</span>
-        <span class="text-python keyword">self</span>._encrypted_phone = <span class="text-python string">"MTUzNjkyNzE1MzY="</span>
-        <span class="text-python keyword">self</span>.social = {
-            <span class="text-python string">"linkedin"</span>: <span class="text-python string">"alexjohnson"</span>,
-            <span class="text-python string">"github"</span>: <span class="text-python string">"alexj-dev"</span>,
-            <span class="text-python string">"twitter"</span>: <span class="text-python string">"@alexj_code"</span>,
-            <span class="text-python string">"dribbble"</span>: <span class="text-python string">"alex_designs"</span>
-        }
+    <span class="line-hidden text-python keyword">def</span> <span class="line-hidden text-python function">get_email</span>(<span class="line-hidden text-python keyword">self</span>):
+
+        <span class="line-hidden text-python comment">"""Decrypt and return the email address"""</span>
+        <span class="line-hidden text-python keyword">return</span> base64.b64decode(<span class="line-hidden text-python keyword">self</span>._encrypted_email).decode(<span class="line-hidden text-python string">'utf-8'</span>)
     
-    <span class="text-python keyword">def</span> <span class="text-python function">get_email</span>(<span class="text-python keyword">self</span>):
-        <span class="text-python comment">"""Decrypt and return the email address"""</span>
-        <span class="text-python keyword">return</span> base64.b64decode(<span class="text-python keyword">self</span>._encrypted_email).decode(<span class="text-python string">'utf-8'</span>)
+    <span class="line-hidden text-python keyword">def</span> <span class="line-hidden text-python function">get_phone</span>(<span class="line-hidden text-python keyword">self</span>):
+        <span class="line-hidden text-python comment">"""Decrypt and return the phone number"""</span>
+        <span class="line-hidden text-python keyword">return</span> base64.b64decode(<span class="line-hidden text-python keyword">self</span>._encrypted_phone).decode(<span class="line-hidden text-python string">'utf-8'</span>)
     
-    <span class="text-python keyword">def</span> <span class="text-python function">get_phone</span>(<span class="text-python keyword">self</span>):
-        <span class="text-python comment">"""Decrypt and return the phone number"""</span>
-        <span class="text-python keyword">return</span> base64.b64decode(<span class="text-python keyword">self</span>._encrypted_phone).decode(<span class="text-python string">'utf-8'</span>)
-    
-    <span class="text-python keyword">def</span> <span class="text-python function">get_social_profile</span>(<span class="text-python keyword">self</span>, platform):
-        <span class="text-python comment">"""Get social media profile URL"""</span>
-        platforms = {
-            <span class="text-python string">"linkedin"</span>: <span class="text-python string">"https://linkedin.com/"</span>,
-            <span class="text-python string">"github"</span>: <span class="text-python string">"https://github.com/"</span>,
-            <span class="text-python string">"twitter"</span>: <span class="text-python string">"https://www.yuque.com/"</span>,
-            <span class="text-python string">"dribbble"</span>: <span class="text-python string">"https://dribbble.com/"</span>
-        }
+    <span class="line-hidden text-python keyword">def</span> <span class="line-hidden text-python function">get_social_profile</span>(<span class="line-hidden text-python keyword">self</span>, platform):
+        <span class="line-hidden text-python comment">"""Get social media profile URL"""</span>
+<span class="line-hidden">         platforms = {</span>
+            <span class="line-hidden text-python string">"linkedin"</span>: <span class="line-hidden text-python string">"https://linkedin.com/"</span>,
+            <span class="line-hidden text-python string">"github"</span>: <span class="line-hidden text-python string">"https://github.com/"</span>,
+            <span class="line-hidden text-python string">"twitter"</span>: <span class="line-hidden text-python string">"https://www.yuque.com/"</span>,
+            <span class="line-hidden text-python string">"dribbble"</span>: <span class="line-hidden text-python string">"https://dribbble.com/"</span>
+<span class="line-hidden">         }</span>
         
-        <span class="text-python keyword">if</span> platform <span class="text-python keyword">in</span> platforms:
-            <span class="text-python keyword">return</span> platforms[platform] + <span class="text-python keyword">self</span>.social[platform]
-        <span class="text-python keyword">return</span> <span class="text-python string">""</span>
+        <span class="line-hidden text-python keyword">if</span> platform <span class="line-hidden text-python keyword">in</span> platforms:
+
+            <span class="line-hidden text-python keyword">return</span> platforms[platform] + <span class="line-hidden text-python keyword">self</span>.social[platform]
+        <span class="line-hidden text-python keyword">return</span> <span class="line-hidden text-python string">""</span>
     
-    <span class="text-python keyword">def</span> <span class="text-python function">say_hello</span>(<span class="text-python keyword">self</span>):
-        <span class="text-python comment">"""Return greetings in different languages"""</span>
-        <span class="text-python keyword">return</span> {
-            <span class="text-python string">"english"</span>: <span class="text-python string">"Hello, world!"</span>,
-            <span class="text-python string">"spanish"</span>: <span class="text-python string">"¡Hola, mundo!"</span>,
-            <span class="text-python string">"french"</span>: <span class="text-python string">"Bonjour, le monde!"</span>,
-            <span class="text-python string">"japanese"</span>: <span class="text-python string">"こんにちは、世界！"</span>
-        }
+    <span class="line-hidden text-python keyword">def</span> <span class="line-hidden text-python function">say_hello</span>(<span class="line-hidden text-python keyword">self</span>):
+        <span class="line-hidden text-python comment">"""Return greetings in different languages"""</span>
+        <span class="line-hidden text-python keyword">return</span> {
+            <span class="line-hidden text-python string">"english"</span>: <span class="line-hidden text-python string">"Hello, world!"</span>,
+            <span class="line-hidden text-python string">"spanish"</span>: <span class="line-hidden text-python string">"¡Hola, mundo!"</span>,
+            <span class="line-hidden text-python string">"french"</span>: <span class="line-hidden text-python string">"Bonjour, le monde!"</span>,
+            <span class="line-hidden text-python string">"japanese"</span>: <span class="line-hidden text-python string">"こんにちは、世界！"</span>
+<span class="line-hidden">         }</span>
 
 
-<span class="text-python keyword">if</span> __name__ == <span class="text-python string">"__main__"</span>:
-    profile = ProfileCard()
-    print(f"Name: {profile.name}")
-    print(f"Role: {profile.role}")
-    print(f"Email: {profile.get_email()}")
+<span class="line-hidden text-python keyword">if</span> __name__ == <span class="line-hidden text-python string">"__main__"</span>:
+
+<span class="line-hidden">     profile = ProfileCard()
+<span class="line-hidden">     print(f"Name: {profile.name}")
+<span class="line-hidden">     print(f"Role: {profile.role}")
+<span class="line-hidden">     print(f"Email: {profile.get_email()}")
     
-    greetings = profile.say_hello()
-    <span class="text-python keyword">for</span> lang, msg <span class="text-python keyword">in</span> greetings.items():
-        print(f"{lang}: {msg}")</pre>
-                </div>
+<span class="line-hidden">     greetings = profile.say_hello()
+    <span class="line-hidden text-python keyword">for</span> lang, msg <span class="line-hidden text-python keyword">in</span> greetings.items():
+
+<span class="line-hidden">         print(f"{lang}: {msg}")</span></pre>
+            </div>
             </div>
 
             <!-- Status Bar -->
@@ -605,6 +637,7 @@ Python implementation of personal information and contact details
             const tabContents = document.querySelectorAll('.tab-content');
             const lineCount = document.getElementById('line-count');
             const fileType = document.getElementById('file-type');
+            const delay = 50;
             
             const lineCounts = {
                 'javascript': '152 lines',
@@ -624,7 +657,7 @@ Python implementation of personal information and contact details
                 tab.addEventListener('click', function() {
                     const tabName = this.getAttribute('data-tab');
                     
-                    // Update active tab styling
+                    // Update active tab styling 更新活动标签页的样式
                     tabs.forEach(t => {
                         t.classList.remove('tag-active');
                         t.classList.add('tag-inactive');
@@ -632,13 +665,34 @@ Python implementation of personal information and contact details
                     this.classList.remove('tag-inactive');
                     this.classList.add('tag-active');
                     
-                    // Show active tab content
+                    // Show active tab content 显示活动标签页的内容
                     tabContents.forEach(content => {
                         content.classList.remove('active');
                     });
                     document.getElementById(tabName).classList.add('active');
+                    // Animate each line of code 为每个代码行添加动画
+            const codeLines = document.querySelectorAll('#' + tabName + ' .line-hidden');          
+            codeLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.classList.remove('line-hidden');
+                    line.classList.add('line-visible');
                     
-                    // Update status bar
+                    // Add cursor effect to the last character of the line  为最后一个字符添加光标效果
+                    if (index === codeLines.length - 1) {
+                        setTimeout(() => {
+                            const lastChar = line.textContent.trim().slice(-1);
+                            if (lastChar && lastChar !== '\n') {
+                                line.innerHTML = line.innerHTML.slice(0, -1) + '<span class="cursor">' + lastChar + '</span>';
+                                setTimeout(() => {
+                                    document.querySelector('.cursor').remove();
+                                }, 1000);
+                            }
+                        }, 50);
+                    }
+                }, delay * index);
+            });
+                    
+                    // Update status bar  更新状态栏
                     lineCount.textContent = lineCounts[tabName];
                     fileType.textContent = fileTypes[tabName];
                 });
@@ -651,51 +705,29 @@ Python implementation of personal information and contact details
                 contactInfo.classList.add('opacity-100');
             }, 2000);
             
-            // Add typing animation effect to code content 为代码内容添加打字动画效果
-            // const codeElements = document.querySelectorAll('.tab-content pre');
-            // codeElements.forEach((element, index) => {
-            //     const originalContent = element.innerHTML;
-            //     element.innerHTML = '';
-                
-            //     let i = 0;
-            //     const typingSpeed = index === 0 ? 20 : 10; // First tab faster
-                
-            //     function type() {
-            //         if (i < originalContent.length) {
-            //             element.innerHTML += originalContent.charAt(i);
-            //             i++;
-            //             setTimeout(type, typingSpeed);
-            //         }
-            //     }
-                
-            //     // Only start typing for the first tab initially 最初只需为第一个标签栏输入内容即可
-            //     if (index === 0) {
-            //         setTimeout(type, 500);
-            //     }
-            // });
             
-            // When switching tabs, animate the code content 在切换标签页时，对代码内容进行动画处理
-            // tabs.forEach(tab => {
-            //     tab.addEventListener('click', function() {
-            //         const tabName = this.getAttribute('data-tab');
-            //         const tabContent = document.getElementById(tabName);
-            //         const codeElement = tabContent.querySelector('pre');
+            // Animate each line of code 为每个代码行添加动画
+            const codeLines = document.querySelectorAll('#javascript .line-hidden');            
+            codeLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.classList.remove('line-hidden');
+                    line.classList.add('line-visible');
                     
-            //         const originalContent = codeElement.innerHTML;
-            //         codeElement.innerHTML = '';
-                    
-            //         let i = 0;
-            //         function type() {
-            //             if (i < originalContent.length) {
-            //                 codeElement.innerHTML += originalContent.charAt(i);
-            //                 i++;
-            //                 setTimeout(type, 10);
-            //             }
-            //         }
-                    
-            //         type();
-            //     });
-            // });
+                    // Add cursor effect to the last character of the line  为最后一个字符添加光标效果
+                    if (index === codeLines.length - 1) {
+                        setTimeout(() => {
+                            const lastChar = line.textContent.trim().slice(-1);
+                            if (lastChar && lastChar !== '\n') {
+                                line.innerHTML = line.innerHTML.slice(0, -1) + '<span class="cursor">' + lastChar + '</span>';
+                                setTimeout(() => {
+                                    document.querySelector('.cursor').remove();
+                                }, 1000);
+                            }
+                        }, 50);
+                    }
+                }, delay * index);
+            });
+            
         });
     </script>
 </body>
