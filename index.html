@@ -121,7 +121,7 @@
     </style>
 </head>
 <body class="bg-darker min-h-screen flex items-center justify-center p-4 font-code text-gray-200 overflow-x-hidden">
-    <!-- Floating background elements -->
+    <!-- Floating background elements 浮动背景元素 -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-[10%] left-[5%] w-64 h-64 bg-primary/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 0s;"></div>
         <div class="absolute top-[30%] right-[10%] w-80 h-80 bg-accent/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
@@ -130,11 +130,11 @@
         <div class="absolute top-[20%] right-[25%] w-48 h-48 bg-go/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 3s;"></div>
     </div>
 
-    <!-- Main Container -->
+    <!-- Main Container 主容器 -->
     <div class="w-full max-w-6xl relative z-10">
-        <!-- Editor Window -->
+        <!-- Editor Window 编辑器窗口 -->
         <div class="bg-glass rounded-lg shadow-2xl overflow-hidden border border-gray-700/50">
-            <!-- Window Controls -->
+            <!-- Window Controls 窗口控件 -->
             <div class="fixed-top flex items-center justify-between bg-darker px-4 py-2 border-b border-gray-700/50">
                 <div class="flex space-x-2">
                     <div class="w-3 h-3 rounded-full bg-error"></div>
@@ -170,9 +170,9 @@
                     <i class="fa fa-code mr-1"></i>profile.py
                 </div>
             </div>
-            <!-- Code Area -->
+            <!-- Code Area 代码区域 -->
             <div class="bg-editor p-4 overflow-x-auto max-h-[70vh] pt-24">
-                <!-- JavaScript Tab Content -->
+                <!-- JavaScript Tab Content JavaScript 标签内容 -->
                 <div id="javascript" class="tab-content active">
                     <pre class="text-sm md:text-base leading-relaxed">
 <span class="line-hidden text-comment">/**
@@ -263,7 +263,7 @@
 <span class="line-hidden">  };</span></pre>
                 </div>
                 
-                <!-- Java Tab Content -->
+                <!-- Java Tab Content Java 标签内容 -->
                 <div id="java" class="tab-content">
                     <pre class="text-sm md:text-base leading-relaxed">
 <span class="line-hidden text-comment">/**
@@ -358,7 +358,7 @@
                 </pre>
                 </div>
                 
-                <!-- Go Tab Content -->
+                <!-- Go Tab Content Go 标签内容 -->
                 <div id="go" class="tab-content">
                     <pre class="text-sm md:text-base leading-relaxed">
 <span class="line-hidden text-go comment">// ProfileCard - Go implementation of developer profile</span>
@@ -438,7 +438,7 @@
 </pre>
                 </div>
                 
-                <!-- Python Tab Content -->
+                <!-- Python Tab Content Python 标签内容 -->
                 <div id="python" class="tab-content">
                     <pre class="text-sm md:text-base leading-relaxed">
 <span class="line-hidden text-python comment">"""
@@ -520,7 +520,7 @@
             </div>
             </div>
 
-            <!-- Status Bar -->
+            <!-- Status Bar 状态条 -->
             <div class="bg-darker py-1 px-4 text-xs text-gray-400 flex justify-between items-center border-t border-gray-700/50">
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center">
@@ -545,7 +545,7 @@
             </div>
         <!-- </div> -->
 
-        <!-- Contact Info Overlay -->
+        <!-- Contact Info Overlay 联系信息覆盖层  -->
         <div id="contact-info" class="mt-6 bg-glass rounded-lg p-6 shadow-lg border border-gray-700/50 opacity-0 transition-opacity duration-500">
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="flex-shrink-0">
@@ -563,6 +563,10 @@
                         <div class="flex items-center text-gray-300">
                             <i class="fa fa-envelope-o text-primary w-6"></i>
                             <a href="mailto:donghao8455@163.com" class="hover:text-primary transition-colors">donghao8455@163.com</a>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fa fa-internet-explorer text-primary w-6"></i>
+                            <a href="https://docs.thend.cn/" class="hover:text-primary transition-colors">https://docs.thend.cn/</a>
                         </div>
                         <div class="flex items-center text-gray-300">
                             <i class="fa fa-phone text-primary w-6"></i>
